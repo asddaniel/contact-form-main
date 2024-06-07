@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+  <link rel="stylesheet" href="style.css">
+  
+  <title>Frontend Mentor | Contact form</title>
+
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <style>
+    .attribution { font-size: 11px; text-align: center; }
+    .attribution a { color: hsl(228, 45%, 44%); }
+    .error-bundary { display: none; color: red; }
+    .error-visible { display: block; }
+  </style>
+</head>
+<body>
+  <div class="success-container masque-container">
+    <div class="primary-title">
+      <span ><img src="assets/images/icon-success-check.svg" alt=""></span>
+      <span>Message Sent</span>
+    </div>
+    <div class="thanks-message">Thanks for completing form we'll be in touch soon</div>
+  </div>
+
+  <div class="container">
+    <h1 class="title">Contact Us</h1>
+    <form action="#" class="form">
+      <div class="row-container sm-col-span-2">
+        <div class="input-container">
+          <label for="first-name" class="label">First Name <span class="star">*</span></label>
+          <input type="text" id="first-name" class="input" required>
+        </div>
+        <div class="input-container">
+          <label for="last-name" class="label">Last Name <span class="star">*</span></label>
+          <input type="text" id="last-name" class="input" required>
+        </div>
+        <div class="error-container">
+          <div class="error-bundary" id="name-error">This field is required</div>
+        </div>
+      </div>
+      <div class="row-container sm-col-span-2">
+        <div class="input-container col-span-2">
+          <label for="email" class="label">Email Address <span class="star">*</span></label>
+          <input type="email" id="email" class="input" required>
+        </div>
+        <div class="error-container">
+          <div class="error-bundary" id="email-error">Please enter a valid email address</div>
+        </div>
+      </div>
+      <div class="row-container">
+        <label class="col-span-2">Query type <span class="star">*</span></label>
+        <div class="col-span-2 sm-col-span-2 grid-container">
+          <div class="radio-container">
+            <input type="radio" name="query" id="general" class="input" required>
+            <label for="general" class="label">General enquiry</label>
+          </div>
+          <div class="radio-container">
+            <input type="radio" name="query" id="support" class="input" required>
+            <label for="support" class="label">Support Request</label>
+          </div>
+          <div class="error-container">
+            <div class="error-bundary" id="query-error">This field is required</div>
+          </div>
+        </div>
+      </div>
+      <div class="row-container">
+        <div class="input-container col-span-2">
+          <label for="message" class="label">Message <span class="star">*</span></label>
+          <textarea name="message" id="message" cols="20" rows="3" class="input" required></textarea>
+        </div>
+        <div class="error-container">
+          <div class="error-bundary" id="message-error">This field is required</div>
+        </div>
+      </div>
+
+      <div class="row-container-submit">
+        <div class="checkbox-container">
+          <input type="checkbox" name="consent" id="consent" class="checkbox" required>
+          <label for="consent">I consent to being contacted by the team <span class="star">*</span></label>
+        </div>
+        <div class="error-container">
+          <div class="error-bundary" id="consent-error">This field is required</div>
+        </div>
+        <button class="btn" type="submit">Submit</button>
+      </div>
+
+    </form>
+  </div>
+
+  <script>
+    const form = document.querySelector(".form");
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      let isValid = true;
+
+      // Clear all previous errors
+      document.querySelectorAll('.error-bundary').forEach(error => {
+        error.classList.remove('error-visible');
+      });
+
+      // First name validation
+      const firstName = document.getElementById('first-name');
+      if (firstName.value.trim() === '') {
+        document.getElementById('name-error').classList.add('error-visible');
+        isValid = false;
+      }
+
+      // Last name validation
+      const lastName = document.getElementById('last-name');
+      if (lastName.value.trim() === '') {
+        document.getElementById('name-error').classList.add('error-visible');
+        isValid = false;
+      }
+
+      // Email validation
+      const email = document.getElementById('email');
+      const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+      if (!emailPattern.test(email.value.trim())) {
+        document.getElementById('email-error').classList.add('error-visible');
+        isValid = false;
+      }
+
+      // Query type validation
+      const query = document.querySelector('input[name="query"]:checked');
+      if (!query) {
+        document.getElementById('query-error').classList.add('error-visible');
+        isValid = false;
+      }
+
+      // Message validation
+      const message = document.getElementById('message');
+      if (message.value.trim() === '') {
+        document.getElementById('message-error').classList.add('error-visible');
+        isValid = false;
+      }
+
+      // Consent validation
+      const consent = document.getElementById('consent');
+      if (!consent.checked) {
+        document.getElementById('consent-error').classList.add('error-visible');
+        isValid = false;
+      }
+
+      if (isValid) {
+        // Submit the form if all validations pass
+        //form.submit();
+        document.querySelector(".success-container").classList.remove("masque-container");
+        setTimeout(function(){
+          document.querySelector(".success-container").classList.add("masque-container");
+        }, 2000)
+      }
+    });
+  </script>
+
+</body>
+</html>
